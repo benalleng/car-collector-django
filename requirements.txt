@@ -8,7 +8,6 @@ django-extensions==3.2.1
 django-heroku==0.3.1
 gunicorn==20.1.0
 jmespath==1.0.1
-psycopg2==2.9.4
 python-dateutil==2.8.2
 s3transfer==0.6.0
 six==1.16.0

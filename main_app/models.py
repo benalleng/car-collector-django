@@ -9,6 +9,12 @@ class Aftermarket(models.Model):
     material = models.CharField(max_length=50)
     type = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('aftermarket_detail', kwargs={'pk': self.id})
+
 class Car(models.Model):
     make = models.CharField(max_length=50)
     model = models.CharField(max_length=50)
