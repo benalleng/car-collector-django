@@ -4,6 +4,11 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class Aftermarket(models.Model):
+    name = models.CharField(max_length=50)
+    material = models.CharField(max_length=50)
+    type = models.CharField(max_length=50)
+
 class Car(models.Model):
     make = models.CharField(max_length=50)
     model = models.CharField(max_length=50)

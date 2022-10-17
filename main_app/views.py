@@ -5,19 +5,6 @@ from django.shortcuts import render
 
 from django.views import generic
 
-class Car:
-    def __init__(self, make, model, year):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.trim = trim
-
-cars = [
-    Car('Ford', 'F150', 2019),
-    Car('Tesla', 'Y', 2019),
-    Car('Honda', 'Accord', 2018)
-]
-
 def home(request):
     return render(request, 'home.html')
 

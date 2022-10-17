@@ -1,4 +1,5 @@
 import os
+import environ
 """
 Django settings for carcollector project.
 
@@ -12,21 +13,27 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from django.conf.locale.en import formats as en_formats
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!#uq(9)*9ft8!7vbj&e8uvt_zawn$9jw+c-9h!ija)oz8arsk0'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG') == 'True' 
+DEBUG_PROPAGATE_EXCEPTIONS = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -115,7 +122,13 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
+
+en_formats.DATE_FORMAT = "m-d-y"
+
+DATE_INPUT_FORMATS = ['%m-%d-%Y']
 
 
 # Static files (CSS, JavaScript, Images)

@@ -8,17 +8,20 @@
 <h1>Car Index</h1>
 
 {% for car in cars %}
-<div class="card">
-    <div class="card-content">
-        <span class="card-title">
-            <a href="/cars/{{ car.name }}">
-                {{ car.name }}
-            </a>
-        </span>
-        <p>Make: {{ car.make }}</p>
-        <p>Model: {{ car.model }}</p>
-        <p>Year: {{ car.year }}</p>
+<a href="{% url 'cars_detail' car.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">
+                <a href="/cars/{{ car.name }}">
+                    {{ car.make }} | {{ car.model }}
+                </a>
+            </span>
+            <p>Make: {{ car.make }}</p>
+            <p>Model: {{ car.model }}</p>
+            <p>Year: {{ car.year }}</p>
+            <p>Trim" {{ car.trim }}</p>
+        </div>
     </div>
-</div>
+</a>
 
 {% endfor %}{% endblock %}
