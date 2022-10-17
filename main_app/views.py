@@ -10,6 +10,7 @@ class Car:
         self.make = make
         self.model = model
         self.year = year
+        self.trim = trim
 
 cars = [
     Car('Ford', 'F150', 2019),
