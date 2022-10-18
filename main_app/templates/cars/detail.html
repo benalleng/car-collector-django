@@ -2,7 +2,7 @@
 
 {% block title %}
 
-Details for {{ car.make }} | {{ car.model }}
+{{ car.make }} | {{ car.model }}
 
 {% endblock %}
 
@@ -40,10 +40,10 @@ Details for {{ car.make }} | {{ car.model }}
                 </tr>
             </thead>
             <tbody>
-                {% for change in car.oilchange.all %}
+                {% for oilchange in car.oilchange_set.all %}
                 <tr>
-                    <td>{{ change.date }}</td>
-                    <td>{{ change.get_change_display }}</td>
+                    <td>{{ oilchange.date }}</td>
+                    <td>{{ oilchange.get_change_display }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -101,7 +101,7 @@ Details for {{ car.make }} | {{ car.model }}
 
 <script>
     const dateField = document.getElementById('id_date');
-    const oilchangeSelect = document.getElementById('id_oilchange');
+    const oilchangeSelect = document.getElementById('id_change');
 
     M.Datepicker.init(dateField, {
         format: 'mmm dd, yyyy',
