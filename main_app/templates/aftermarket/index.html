@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title%}
+    Aftermarket Parts | Part Collector
+{% endblock %}
+{% block content %}    
+<h1>Parts Index</h1>
+
+{% for aftermarket in object_list %}
+<a href="{% url 'aftermarket_detail' aftermarket.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">
+            {{ aftermarket.name }}
+            </span>
+            <p>Name: {{ aftermarket.name }}</p>
+            <p>Material: {{ aftermarket.material }}</p>
+            <p>Type: {{ aftermarket.type }}</p>
+        </div>
+    </div>
+</a>
+
+{% endfor %}{% endblock %}

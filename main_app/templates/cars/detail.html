@@ -14,8 +14,9 @@ Details for {{ car.make }} | {{ car.model }}
     <div class="col s6">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">{{ car.make }} | { car.model }}</span>
+                <span class="card-title">{{ car.make }} | {{ car.model }}</span>
                 <p>Year: {{ car.year }}</p>
+                <p>Color: {{ car.color }}</p>
                 <p>Trim: {{ car.trim }}</p>
             </div>
             <div class="card-action">
@@ -23,3 +24,5 @@ Details for {{ car.make }} | {{ car.model }}
         </div>
     </div>
 </div>
+
+{% endblock %}
