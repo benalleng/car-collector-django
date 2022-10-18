@@ -90,7 +90,7 @@ class CarCreate(CreateView):
     model = Car
     fields = ('make', 'model', 'year', 'color', 'trim')
     def form_valid(self, form):
-        # form.instance.user = self.request.user
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
 class AftermarketCreate(CreateView):
