@@ -20,9 +20,98 @@ Details for {{ car.make }} | {{ car.model }}
                 <p>Trim: {{ car.trim }}</p>
             </div>
             <div class="card-action">
+                <a href="{% url 'cars_update' car.id %}">Update</a>
+                <a href="{% url 'cars_delete' car.id %}">Delete</a>
             </div>
         </div>
     </div>
+    <div class="col s6">
+        <form action="{% url 'add_oilchange' car.id %}" method="POST">
+            {% csrf_token %}
+            {{ oilchange_form.as_p }}
+            <input class="btn blue" type="submit" value="Add Oil Change">
+        </form>
+
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Oil Change</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for change in car.oilchange.all %}
+                <tr>
+                    <td>{{ change.date }}</td>
+                    <td>{{ change.get_change_display }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col s6">
+        <h3>{{ car.make }} {{ car.model }} Aftermarket Parts</h3>
+        {% if car.aftermarket.count %}
+        {% for aftermarket in car.aftermarket.all %}
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">
+                    A <span>{{ aftermarket.material }}</span> {{ aftermarket.name }}
+                </span>
+            </div>
+                <form action="{% url 'del_aftermarket' car.id aftermarket.id %}" method="post">
+                {% csrf_token %}
+                    <button type="submit" class="btn">Delete Aftermarket</button>
+                </form>            
+        </div>
+        {% endfor %}
+        {% else %}
+        <h5>{{ car.make }} {{ car.model }} doesn't have any aftermarket parts</h5>
+        {% endif %}
+    </div>
+    <div class="col s6">
+        <h3>Available Parts</h3>
+        {% if aftermarket.count %}
+            {% for aftermarket in aftermarket.all %}
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">
+                        A <span class="{{ aftermarket.material.lower }}-text">
+                            {{ aftermarket.material.capitalize }}</span> {{ aftermarket.name }}
+                    </span>
+                </div>
+                <div class="card-action">
+                    <form action="{% url 'assoc_aftermarket' car.id aftermarket.id %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="btn">Add</button>
+                    </form>
+                  </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <h5>{{ car.make }} has all available parts</h5>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    const dateField = document.getElementById('id_date');
+    const oilchangeSelect = document.getElementById('id_oilchange');
+
+    M.Datepicker.init(dateField, {
+        format: 'mmm dd, yyyy',
+        defaultDate: new Date(),
+        setDefaultDate: true,
+        autoClose: true
+    });
+
+    M.FormSelect.init(oilchangeSelect);
+</script>
 </div>
 
 {% endblock %}

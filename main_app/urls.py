@@ -18,6 +18,6 @@ urlpatterns = [
     path('cars/<int:pk>/delete/', views.CarDelete.as_view(), name='cars_delete'),
     path('aftermarket/<int:pk>/delete/', views.AftermarketDelete.as_view(), name='aftermarket_delete'),
     path('cars/<int:car_id>/add_oilchange/', views.add_oilchange, name='add_oilchange'),
-    path('cars/<int:car_id>/assoc_toy/<int:toy_id>/', views.assoc_aftermarket, name='assoc_aftermarket'),
-    path('cars/<int:car_id>/del_toy/<int:toy_id>/', views.del_aftermarket, name='del_aftermarket'),
+    path('cars/<int:car_id>/assoc_aftermarket/<int:aftermarket_id>/', views.assoc_aftermarket, name='assoc_aftermarket'),
+    path('cars/<int:car_id>/del_aftermarket/<int:aftermarket_id>/', views.del_aftermarket, name='del_aftermarket'),
 ]
