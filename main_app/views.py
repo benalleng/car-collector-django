@@ -19,20 +19,26 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
+@login_required
 def cars_index(request):
     cars = Car.objects.all()
     return render(request, 'cars/index.html', {'cars': cars})
 
+@login_required
 def aftermarket_index(request):
     aftermarket = Aftermarket.objects.all()
     return render(request, 'aftermarket/index.html', {'aftermarket': aftermarket})
 
+@login_required
+@login_required
 def cars_create(request):
     return render(request, 'cars/car_form.html')
 
+@login_required
 def aftermarket_create(request):
     return render(request, 'aftermarket/aftermarket_form.html')
 
+@login_required
 def cars_detail(request, car_id):
     car = Car.objects.get(id=car_id)
     oilchange_form = OilChangeForm()
@@ -43,12 +49,14 @@ def cars_detail(request, car_id):
         'aftermarket': aftermarket_car_doesnt_have
         })
 
+@login_required
 def aftermarket_detail(request, aftermarket_id):
     aftermarket = Aftermarket.objects.get(id=aftermarket_id)
     return render(request, 'aftermarket/detail.html', {
         'aftermarket': aftermarket
     })
 
+@login_required
 def add_oilchange(request, car_id):
     print(request.POST)
     form = OilChangeForm(request.POST)
@@ -60,10 +68,12 @@ def add_oilchange(request, car_id):
         print(form.errors)
     return redirect('cars_detail', car_id=car_id)
 
+@login_required
 def assoc_aftermarket(request, car_id, aftermarket_id):
     Car.objects.get(id=car_id).aftermarket.add(aftermarket_id)
     return redirect('cars_detail', car_id=car_id)
 
+@login_required
 def del_aftermarket(request, car_id, aftermarket_id):
     Car.objects.get(id=car_id).aftermarket.remove(aftermarket_id)
     return redirect('cars_detail', car_id=car_id)
@@ -82,38 +92,38 @@ def signup(request):
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
 
-class AftermarketIndex(ListView):
+class AftermarketIndex(LoginRequiredMixin, ListView):
     template_name = 'aftermarket/index.html'
     model = Aftermarket
 
-class CarCreate(CreateView):
+class CarCreate(LoginRequiredMixin, CreateView):
     model = Car
     fields = ('make', 'model', 'year', 'color', 'trim')
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class AftermarketCreate(CreateView):
+class AftermarketCreate(LoginRequiredMixin, CreateView):
     model = Aftermarket
     fields = '__all__'
 
-class AftermarketDetail(DetailView):
+class AftermarketDetail(LoginRequiredMixin, DetailView):
     template_name = 'aftermarket/detail.html'
     model = Aftermarket
 
-class CarUpdate(UpdateView):
+class CarUpdate(LoginRequiredMixin, UpdateView):
   model = Car
   # Let's disallow the renaming of a cat by excluding the name field!
   fields = ['model', 'year', 'color', 'trim']
 
-class AftermarketUpdate(UpdateView):
+class AftermarketUpdate(LoginRequiredMixin, UpdateView):
     model = Aftermarket
     fields = ['material', 'type']
 
-class CarDelete(DeleteView):
+class CarDelete(LoginRequiredMixin, DeleteView):
   model = Car
   success_url = '/cars/'
 
-class AftermarketDelete(DeleteView):
+class AftermarketDelete(LoginRequiredMixin, DeleteView):
     model = Aftermarket
     success_url = '/aftermarket/'
