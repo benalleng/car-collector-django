@@ -68,6 +68,20 @@ def del_aftermarket(request, car_id, aftermarket_id):
     Car.objects.get(id=car_id).aftermarket.remove(aftermarket_id)
     return redirect('cars_detail', car_id=car_id)
 
+def signup(request):
+    error_message = None
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('cars_index')
+        else:
+            error_message = 'Signup Input Invalid - Please try again'
+    form = UserCreationForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'registration/signup.html', context)
+
 class AftermarketIndex(ListView):
     template_name = 'aftermarket/index.html'
     model = Aftermarket

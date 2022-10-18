@@ -22,6 +22,7 @@ class Car(models.Model):
     color = models.CharField(max_length=50)
     trim = models.CharField(max_length=100)
     aftermarket = models.ManyToManyField(Aftermarket)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.make
